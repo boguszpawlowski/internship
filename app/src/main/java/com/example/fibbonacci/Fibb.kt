@@ -14,4 +14,6 @@ fun main() {
     }
     println("n = $n")
     println("Oto wyraz ciagu: $x")
+
+    println("Zmiana 1")
 }
