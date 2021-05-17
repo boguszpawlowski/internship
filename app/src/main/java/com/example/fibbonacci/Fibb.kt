@@ -2,7 +2,7 @@ package com.example.fibbonacci
 
 
 fun main() {
-    val n = 8
+    val n = 7
     var x = 0
     var y = 1
     var suma = 0
