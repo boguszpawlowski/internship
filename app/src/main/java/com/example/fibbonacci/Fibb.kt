@@ -2,7 +2,7 @@ package com.example.fibbonacci
 
 
 fun main() {
-    val n = 7
+    val n = 5
     var x = 0
     var y = 1
     var suma = 0
@@ -14,6 +14,4 @@ fun main() {
     }
     println("n = $n")
     println("Oto wyraz ciagu: $x")
-
-    println("Zmiana 1")
 }
