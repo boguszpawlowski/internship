@@ -1,0 +1,36 @@
+{
+  "categories": [
+    {
+      "title": "## 🚀 Tasks",
+      "labels": ["IN-"],
+      "exclude_labels": ["EX-"],
+      "empty_content": "- No changes"
+    },
+    {
+      "title": "## 🧪 Misc",
+      "labels": ["EX-"],
+      "empty_content": "- No changes"
+    }
+  ],
+  "sort": {
+    "order": "DESC",
+    "on_property": "mergedAt"
+  },
+  "template": "${{CHANGELOG}}\n\n<details>\n<summary>Uncategorized</summary>\n\n${{UNCATEGORIZED}}\n</details>",
+  "pr_template": "- ${{TITLE}}\n   - PR: #${{NUMBER}} by **@${{AUTHOR}}**" ,
+  "empty_template": "- No changes",
+  "label_extractor": [
+    {
+      "pattern": "IN-",
+      "on_property": "title",
+      "method": "match"
+    },
+    {
+      "pattern": "EX-",
+      "on_property": "title",
+      "method": "match"
+    }
+  ],
+  "max_tags_to_fetch": 200,
+  "max_pull_requests": 200
+}

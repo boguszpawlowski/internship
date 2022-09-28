@@ -1,0 +1,55 @@
+name: Create Github Release
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+jobs:
+  create-tag:
+    name: Create Tag
+    runs-on: ubuntu-latest
+    outputs:
+      tag_name: ${{steps.save_tag.outputs.tag_name}}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Obtain Tag Name
+        run: bash ./.github/workflows/obtainTagName.sh
+
+      - name: Tag Release
+        uses: rickstaa/action-create-tag@v1
+        with:
+          tag: ${{ env.TAG_NAME }}
+          message: "Release ${{ env.TAG_NAME }}"
+
+      - name: Save Tag Name To Output
+        id: save_tag
+        run: echo "::set-output name=tag_name::${{ env.TAG_NAME }}"
+
+  create-github-release:
+    name: Publish Github Release
+    runs-on: ubuntu-latest
+    needs: create-tag
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          ref: "refs/tags/${{needs.create-tag.outputs.tag_name}}"
+
+      - name: Create Changelog
+        id: create_changelog
+        uses: mikepenz/release-changelog-builder-action@v3.2.0
+        with:
+          configuration: "config/changelog_configuration.json"
+
+      - name: Github Release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{needs.create-tag.outputs.tag_name}}
+          release_name: Release ${{needs.create-tag.outputs.tag_name}}
+          body: ${{steps.create_changelog.outputs.changelog}}
+          draft: false
+          prerelease: false
