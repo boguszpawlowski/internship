@@ -1,4 +1,4 @@
-VERSION=`cat ./gradle.properties | grep "VERSION_NAME" | cut -d'=' -f2`
+VERSION=`cat ./gradle.properties | grep "VERSION_NAME"`
 echo "Current version: $VERSION"
 TAG_NAME="v$VERSION"
 echo "Tag name: $TAG_NAME"
